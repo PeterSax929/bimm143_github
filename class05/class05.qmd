@@ -1,0 +1,166 @@
+---
+title: "Class 5 Data Viz with ggplot"
+author: "Peter Sax A18133704"
+format: pdf
+toc: true
+---
+
+# Background
+
+There are many graphics syetems available in R. These include "base" R and tones of add-on packages like **ggplot2**.
+
+Let's compare "base" and **ggplot2** briefly. We can use some example data that is built-in with R called `cars`:
+
+```{r}
+plot(cars)
+```
+
+How can we do this with **ggplot2**
+
+First we need to install the package. We do this with `install.packages("ggplot2")`. I only need to do this once and then it will be available on my computer from then on.
+
+> Key point: I only install packages in the R console now with quarto docs or R scripts.
+
+Before I use any add-on package, I must load it up with a call to `library()`.
+
+```{r}
+install.packages('ggplot2', repos = "http://cran.us.r-project.org")
+library(ggplot2)
+```
+
+```{r}
+ggplot(cars, aes(x=speed, y=dist)) +
+  geom_point()
+```
+
+For "simple" plots ggplot is much more verbose than base R but the defaults are nicer and for complicated plots it becomes much more efficient and structured.
+
+> Q. Add a line to show the relationship of speed to stopping distance (i.e. add another "layer")
+
+```{r}
+p <- ggplot(cars, aes(speed, dist)) +
+  geom_point() +
+  geom_smooth(se = FALSE, method = "lm")
+```
+
+I can always save any ggplot object (i.e. plot) and then use it later 
+```{r}
+p + labs(title = "My first ggplot", subtitle = "Stopping distance of old cars", caption = "BIMM143", xlab = "Speed (MPG", ylab = "Stopping distance (ft)") + 
+  theme_bw()
+```
+
+> Q. Add a title and subtitle to the plot
+
+# Using different aes and geoms
+
+## Gene expression plot
+
+Read input data into R
+
+```{r}
+url <- "https://bioboot.github.io/bimm143_S20/class-material/up_down_expression.txt"
+genes <- read.delim(url)
+head(genes)
+```
+> How many genes are in this database?
+
+```{r}
+nrow(genes)
+```
+
+> Q. How many columns are there?
+
+```{r}
+ncol(genes)
+```
+
+> Q. What are the column names?
+
+```{r}
+colnames(genes)
+```
+
+> Q. How many "up" and "down" regulated genes are there?
+
+```{r}
+table(genes$State)
+```
+
+> Q. Make a first plot of this data
+
+```{r}
+ggplot(genes) +
+  aes(x=Condition1, y=Condition2, col=State) +
+  geom_point() +
+  labs(title="Gene expression changes upon drug treatment", x="Control (no drug)", y= "Drug treated") + 
+  theme_bw()
+```
+
+# Using different geoms
+
+Let's plot some aspects of the in-built `mtcars` dataset.
+
+```{r}
+head(mtcars)
+```
+
+> Q. Scatter plot of `mpg` vs `disp`
+
+```{r}
+p1 <- ggplot(mtcars) + aes(mpg, disp) + geom_point()
+```
+
+> Q. Box plot of `gear` vs `disp`
+
+```{r}
+p2 <- ggplot(mtcars) + aes(gear, disp, group=gear) + geom_boxplot()
+```
+
+> Q. Bar plot of `carb`
+
+```{r}
+p3 <- ggplot(mtcars) + aes(carb) + geom_bar()
+```
+
+
+> Q. Smooth of `disp` vs `qsec`
+
+```{r}
+p4 <- ggplot(mtcars) + aes(disp, qsec) + geom_smooth()
+```
+
+I want to combine all these plots into one figure with multiple panels.
+
+We can use the **patchwork** package to do this.
+
+```{r}
+library(patchwork)
+
+( (p1 | p2 | p3) / p4)
+```
+
+
+```{r}
+# File location online
+url <- "https://raw.githubusercontent.com/jennybc/gapminder/master/inst/extdata/gapminder.tsv"
+
+gapminder <- read.delim(url)
+```
+
+```{r}
+head(gapminder)
+```
+
+> Q. How many countries are in this dataset?
+
+```{r}
+length(table(gapminder$country))
+```
+
+```{r}
+ggplot(gapminder) + aes(gdpPercap, lifeExp, col = continent, size = pop) + 
+  geom_point(alpha = 0.3) + 
+  facet_wrap(~continent) +
+  theme_bw()
+```
+

@@ -1,0 +1,110 @@
+---
+title: "Class 6: R functions"
+author: "Peter Sax"
+format: pdf
+toc: true
+---
+
+Let's start writing our first silly function to add some numbers:
+
+Every R function has 3 things:
+
+- name (we get to pick this)
+- input arguments (there are loads of these separated by a comma)
+- the body (the R code that does the work)
+
+## 1. Generate `add` function
+
+```{r}
+add <- function(x, y){x + y}
+```
+
+I can just use this function
+
+```{r}
+add(1,100)
+```
+```{r}
+add(c(1,2,3,4), 100)
+```
+We can set a default for x or y so that we can run the function with only one argument
+
+```{r}
+adddefault <- function(x, y=10){x + y}
+adddefault(1)
+adddefault(1, 100)
+```
+## 2. Generate DNA Sequence
+
+> Q. Write a function to return a nucleotide sequence of a user specified length? Call it `generate_dna()`
+
+```{r}
+generate_dna <- function(size){
+  
+  nucleotides <- c("A","T","C","G")
+  sample(nucleotides, size, replace = TRUE)
+}
+
+generate_dna(5)
+generate_dna(20)
+```
+I want the ability to return a sequence like "AGTACCTG" where the result is only one element.
+
+```{r}
+generate_dna2 <- function(size, together = TRUE){
+  nucleotides <- c("A","T","C","G")
+  sequence <- sample(nucleotides, size=size, replace = TRUE)
+  if(together) {sequence <- paste(sequence, collapse="")}
+  return(sequence)
+}
+```
+```{r}
+generate_dna2(10)
+generate_dna2(10, together=FALSE)
+```
+## 3. Generate protein sequence
+
+We can get the set of 20 natural amino acids from the **bio3d** package.
+
+```{r}
+#install.packages("bio3d")
+```
+
+> Q. Write a function, `generate_protein()` to return protein sequences of a user specified length
+
+```{r}
+generate_protein1 <- function(size=5, together = TRUE){
+  aminos <- c("A", "R", "N", "D", "C", "Q", "E", "G", "H", "I", "L", "K", "M", "F", "P", "S", "T","W", "Y", "V")
+  protseq <- sample(aminos, size=size, replace=TRUE)
+  if(together){protseq <- paste(protseq, collapse = "")}
+  return(protseq)
+}
+```
+```{r}
+generate_protein1(11)
+```
+> Q. Write a function that generates sequences of length 6 to 12.
+
+```{r}
+sapply(6:12, generate_protein1)
+```
+It would be cool and useful if I could get FASTA format output.
+
+```{r}
+ans <- sapply(6:12, generate_protein1)
+ans
+```
+```{r}
+cat(paste(">ID.", 6:12,"\n", ans, sep = ""), sep="\n")
+
+```
+```{r}
+id.line <- paste(">ID.", 6:12, sep = "")
+seq.line <- paste(id.line, ans, sep = "\n")
+cat(seq.line, sep = "\n")
+```
+> Q. Determine if these sequences can be found in nature or if they are unique.
+
+After using a BLASTp search by inputting the FASTA code, I determined that length 9, 10, 11, 12 are unique, but 6, 7, 8 are not because there are sequences with 100% coverage and identity.
+
+

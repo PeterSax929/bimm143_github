@@ -1,0 +1,239 @@
+---
+title: "Class08 - Unsupervised Learning"
+author: "Peter"
+format: pdf
+toc: true
+---
+
+# Unsupervised Learning for Breast Cancer Cell Analysis
+
+This document outlines a class mini-project focused on unsupervised learning analysis of human breast cancer cell data. Students will employ techniques like exploratory data analysis, Principle Component Analysis (PCA) for dimensionality recuction, and hierarchical clustering to identify potential groupings within the data. An optional section includes K-means clustering and the project culminates in combining these methods and evaluating their sensitivity and specificity for potential prediction on new samples. The goal is to apply learned unsupervised learning concepts to a real world biological dataset.
+
+## Data Import
+
+Our data comes from the U. of Wisconsin Medical Center
+
+```{r}
+wisc.df <- read.csv("WisconsinCancer.csv", row.names = 1)
+head(wisc.df)
+```
+
+> Q1. How many patients/samples are in the dataset?
+
+```{r}
+nrow(wisc.df)
+```
+
+> Q2. How many of the observations have a malignant diagnosis?
+
+```{r}
+table(wisc.df$diagnosis)
+```
+
+> Q3. How many variables in the data are suffixed with _mean?
+
+```{r}
+grep("_mean", colnames(wisc.df))
+length(grep("_mean", colnames(wisc.df)))
+```
+
+There is a diagnosis column that is the clinician consensus that I want to exclude from my further analysis. We will come back later and compare our results to this diagnosis
+
+```{r}
+diagnosis <- as.factor(wisc.df$diagnosis)
+head(diagnosis)
+```
+
+Now we can remove it from the wisc.df dataset
+
+```{r}
+wisc.data <- wisc.df[,-1]
+```
+
+## Clustering
+
+Let's try a `hclust()`
+```{r}
+hc <- hclust(dist(wisc.data))
+plot(hc)
+```
+We can extract clusters from the this awful dendrogram with the `cutree()` function
+
+```{r}
+grps <- cutree(hc, k=2)
+table(grps)
+```
+
+We can generate a cross-table that compares our cluster `grps` vector with our `diagnosis` vector values.
+
+```{r}
+table(diagnosis, grps)
+```
+## Principal Component Analysis
+
+The main function for PCA in base R is `prcomp()`, it has a default input parameter of `scale=FALSE`.
+
+### The importance of data scaling
+
+```{r}
+#prcomp()
+head(mtcars)
+```
+
+We could do a PCA of this data as is and it could be mis-leading. 
+
+```{r}
+pc <- prcomp(mtcars)
+biplot(pc)
+```
+Let's look at the mean values of each column and their standard deviation.
+
+```{r}
+colMeans(mtcars)
+```
+```{r}
+apply(mtcars, 2, sd)
+```
+We can scale this data before PCA to get a much better representation and analysis of all the columns.
+
+```{r}
+mtscale <- scale(mtcars)
+colMeans(mtscale)
+```
+```{r}
+apply(mtscale, 2, sd)
+```
+
+```{r}
+pc.scale <- prcomp(mtscale)
+```
+
+We can look at the two main results figures from PCA - the "PC Plot" (a.k.a score plot, orientation plot, or PC1 vs PC2 plot). A loading plot of the unscaled PCA results...
+
+```{r}
+library(ggplot2)
+ggplot(pc$rotation) +
+  aes(PC1, rownames(pc$rotation)) +
+  geom_col()
+```
+
+```{r}
+ggplot(pc.scale$rotation) +
+  aes(PC1, rownames(pc$rotation)) +
+  geom_col()
+```
+
+PC plot of scaled PCA results 
+```{r}
+ggplot(pc.scale$x) + 
+  aes(PC1, PC2, label=rownames(pc.scale$x)) +
+  geom_point() +
+  geom_text()
+```
+
+> **Key point**: In general we will set `scale=TRUE` when we do PCA. This is not the default but probably should be.
+
+We can check the SD and mean of the different columns in `wisc.data` to see if we need to scale - hint: we do!
+
+### PCA of wisc.data
+
+```{r}
+wisc.pr <- prcomp(wisc.data, scale=TRUE)
+summary(wisc.pr)
+```
+
+Let's make the main PC1 vs PC2 figure...
+
+```{r}
+ggplot(wisc.pr$x) + 
+  aes(PC1, PC2, col=diagnosis) +
+  geom_point() +
+  xlab("PC1 (44.3%)") +
+  ylab("PC2 (19.0%)")
+```
+
+> Q4. From your results, what proportion of the original variance is captured by PC1?
+
+44.27%
+
+> Q5. How many PCs are required to describe at least 70% of the original variance of the data?
+
+3 (By adding PC1 + PC2 + PC3)
+
+> Q6. How many PCs are required to describe at least 90% of the original variance of the data?
+
+7 (Using similar method as Q5)
+
+```{r}
+biplot(wisc.pr)
+```
+
+> Q7. What stands out about this plot? Is it easy or difficult to understand? Why?
+
+The plot is nit visually appealing and it is difficult to interpret data. The labels are also obstructive and make it even more messy. 
+
+We can make a scatter plot so it is not as messy
+
+```{r}
+plot(wisc.pr$x, col=diagnosis, xlab="PC1", ylab="PC2")
+```
+
+> Q8. Generate a similar plot for PC 1 and 3. What do you notice?
+
+```{r}
+plot(wisc.pr$x[,1:3], col=diagnosis, xlab="PC1", ylab="PC3")
+```
+
+The first plot (PC1 vs PC2) has less overlap and the groups are more distinct
+
+We can use ggplot for more fancy results
+
+```{r}
+df <- as.data.frame(wisc.pr$x)
+df$diagnosis <- diagnosis
+
+library(ggplot2)
+
+ggplot(df) + 
+  aes(PC1, PC2, col=diagnosis) + 
+  geom_point()
+```
+
+## Variance Explained
+
+```{r}
+pr.var <- wisc.pr$sdev^2
+head(pr.var)
+```
+
+```{r}
+pve <- pr.var / sum(pr.var)
+
+plot(pve, xlab = "PC", ylab = "PVE", ylim = c(0,1), type = "o")
+```
+
+> Q9. For PC1, what is the component of the loading vector for the feature concave.points_mean?
+
+wisc.pr$rotation[,9]
+
+> Q10. What is the minimum number of PCs required to explain 80% of the variance of the data?
+
+5 (by adding PC1 + ... + PC5)
+
+
+## Combining Methods
+
+
+```{r}
+wisc.pr.hclust <- hclust(dist(wisc.pr$x[,1:2]), method="ward.D2")
+pc.grps <- cutree(wisc.pr.hclust, k=2)
+table(pc.grps)
+```
+
+How do my cluster grps compare to the expert diagnosis?
+
+```{r}
+table(diagnosis, pc.grps)
+table(diagnosis)
+```
+

@@ -1,0 +1,39 @@
+nano is a very basic text editor that is available everywhere
+
+Some important unix commands:
+
+pwd: tells us where we are
+cd: changes directory
+ls: lists items in directory
+mkdir: makes new directory
+rm: wipes everything ** WARNING **
+nano: opens text editor
+head: view top of file
+tail: view bottom of file
+less: page through a file
+
+Useful shortcuts:
+The TAB key for autocomplete
+The ~ for home area
+The ../ for dropping to parent directory
+
+** AWS **
+
+Instance ID
+
+i-041b2555e07eb115c (bimm143_peter)
+Open an SSH client.
+
+Locate your private key file. The key used to launch this instance is bimm143_peter.pem
+
+Run this command, if necessary, to ensure your key is not publicly viewable.
+chmod 400 "~/Downloads/bimm143_peter.pem"
+
+Connect to your instance using its Public DNS:
+ec2-54-68-222-105.us-west-2.compute.amazonaws.com
+
+Example:
+
+ssh -i ~/Downloads/bimm143_peter.pem ubuntu@ec2-54-68-222-105.us-west-2.compute.amazonaws.com
+
+

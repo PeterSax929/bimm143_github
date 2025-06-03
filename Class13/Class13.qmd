@@ -1,0 +1,22 @@
+---
+title: "Class 13 - Transcriptomics"
+author: "Peter Sax"
+format: html
+toc: true
+---
+
+## 1. Bioconductor setup
+
+```{r}
+library(BiocManager)
+```
+
+```{r}
+library(DESeq2)
+```
+
+The count matrix (called the countData in DESeq2-speak) the value in the i-th row and the j-th column of the data.frame tells us how many reads can be assigned to gene i in sample j. Analogously, for other types of assays, the rows of this matrix might correspond e.g. to binding regions (with ChIP-Seq) or peptide sequences (with quantitative mass spectrometry).
+
+For the sample metadata (i.e. colData in DESeq2-speak) samples are in rows and metadata about those samples are in columns. Notice that the first column of colData must match the column names of countData (except the first, which is the gene ID column) (Figure 2).
+
+## 2. Import countData and colData

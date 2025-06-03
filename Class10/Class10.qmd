@@ -1,0 +1,113 @@
+---
+title: "Class 10 - Structural Bioinformatics"
+author: "Peter Sax"
+format: html
+toc: true
+---
+
+## 1. Introduction to PDB
+
+The main repository of bio-molecular structure data is called the [Protein Data Bank](https://www.rcsb.org/) (PDB). It is the second oldest database ever (after GenBank)
+
+What is currently in the PDB? We can access current composition stats [here](https://www.rcsb.org/stats)
+
+```{r}
+pdb.stats <- read.csv("Data Export Summary.csv", row.names=1)
+head(pdb.stats)
+```
+
+
+> Q1: What percentage of structures in the PDB are solved by X-Ray and Electron Microscopy.
+
+```{r}
+comma.sum <- function(x){
+  y <- gsub(",","",x)
+  return(sum(as.numeric(y)))}
+
+(comma.sum(pdb.stats$X.ray) + comma.sum(pdb.stats$EM)) / (comma.sum(pdb.stats$Total)) * 100
+```
+
+
+> Q2: What proportion of structures in the PDB are protein?
+
+```{r}
+comma.sum(pdb.stats["Protein (only)","Total"]) / comma.sum(pdb.stats[,"Total"])
+```
+
+## 2. Visualizing with Mol-star
+
+Mol (pronounced “molstar”) is a new web-based molecular viewer that is rapidly gaining in popularity and utility. At the time of writing it is still a long way from having the full feature set of stand-alone molecular viewer programs like VMD, PyMol or Chimera. However, it is gaining new features all the time and does not require any download or complicated installation.
+
+
+![Figure 1. A first look at HIV-pr](1HSG.png)
+
+## 4. Comparative Structure Analysis
+
+```{r}
+library(bio3d)
+aa <- get.seq("1ake_A")
+```
+```{r}
+blast <- blast.pdb(aa)
+```
+
+```{r}
+attributes(blast)
+hits <- plot(blast)
+```
+
+```{r}
+head(hits$pdb.id)
+```
+```{r}
+# Download releated PDB files
+#files <- get.pdb(hits$pdb.id, path="pdbs", split=TRUE, gzip=TRUE)
+#pdbs <- pdbaln(files, fit = TRUE)
+```
+
+
+
+```{r}
+#pc <- pca(pdbs)
+#plot(pc)
+```
+
+
+Write a PDB "trajectory" for mol-star
+
+```{r}
+#mktrj(pc, file="pca_results.pdb")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

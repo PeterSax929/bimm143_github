@@ -25,4 +25,4 @@ My classwork from [BIMM 143 SP25](https://bioboot.github.io/bimm143_S25/) at UC 
 
 - 16 UNIX for bioinformatics
 
-- 18 Pertussis Mini Project 
+- 18 [Pertussis Mini Project](https://github.com/PeterSax929/bimm143_github/blob/main/Class18/Class18.md) 

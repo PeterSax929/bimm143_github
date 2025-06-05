@@ -15,7 +15,7 @@ My classwork from [BIMM 143 SP25](https://bioboot.github.io/bimm143_S25/) at UC 
 
 - 10 [Structural Bioinformatics 1](https://github.com/PeterSax929/bimm143_github/blob/main/Class10/class10.md)
 
-- 11 Structural Bioinformatics 2 (AlphaFold)
+- 11 [Structural Bioinformatics 2 (AlphaFold)](https://github.com/PeterSax929/bimm143_github/blob/main/Class11/class11.md)
 
 - 12 Genome Informatics
 

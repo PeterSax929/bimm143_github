@@ -62,7 +62,7 @@ points(pdbs$b[5,], typ="l", col="orange")
 abline(v=100, col="gray")
 ```
 
-![](class11_files/figure-commonmark/unnamed-chunk-6-1.png)
+![](Class11_files/figure-commonmark/unnamed-chunk-6-1.png)
 
 ``` r
 results_dir <- "HIVPrdimer_a4e10/" 
@@ -109,7 +109,7 @@ rownames(rd) <- paste0("m",1:5)
 pheatmap(rd)
 ```
 
-![](class11_files/figure-commonmark/unnamed-chunk-10-1.png)
+![](Class11_files/figure-commonmark/unnamed-chunk-10-1.png)
 
 We can improve the superposition/fitting of our models by finding the
 most consistent “rigid core” common across all the models. For this we
@@ -133,7 +133,7 @@ plotb3(rf, sse=pdb)
 abline(v=100, col="gray", ylab="RMSF")
 ```
 
-![](class11_files/figure-commonmark/unnamed-chunk-12-1.png)
+![](Class11_files/figure-commonmark/unnamed-chunk-12-1.png)
 
 Independent of the 3D structure, AlphaFold produces an output called
 Predicted Aligned Error (PAE). This is detailed in the JSON format
@@ -182,7 +182,7 @@ plot.dmat(pae1$pae,
           ylab="Residue Position (j)")
 ```
 
-![](class11_files/figure-commonmark/unnamed-chunk-16-1.png)
+![](Class11_files/figure-commonmark/unnamed-chunk-16-1.png)
 
 ``` r
 plot.dmat(pae5$pae, 
@@ -192,7 +192,7 @@ plot.dmat(pae5$pae,
           zlim=c(0,30))
 ```
 
-![](class11_files/figure-commonmark/unnamed-chunk-17-1.png)
+![](Class11_files/figure-commonmark/unnamed-chunk-17-1.png)
 
 ``` r
 aln_file <- list.files(path=results_dir,
@@ -221,7 +221,7 @@ plotb3(sim[1:99], sse=trim.pdb(pdb, chain="A"),
        ylab="Conservation Score")
 ```
 
-![](class11_files/figure-commonmark/unnamed-chunk-20-1.png)
+![](Class11_files/figure-commonmark/unnamed-chunk-20-1.png)
 
 ``` r
 con <- consensus(aln, cutoff = 0.9)

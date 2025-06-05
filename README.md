@@ -11,7 +11,7 @@ My classwork from [BIMM 143 SP25](https://bioboot.github.io/bimm143_S25/) at UC 
 
 - 08 [Hands on Project with PCA](https://github.com/PeterSax929/bimm143_github/blob/main/Class08/class08.md)
 
-- 09 Halloween Candy
+- 09 [Halloween Candy](https://github.com/PeterSax929/bimm143_github/blob/main/Class09/class09.md)
 
 - 10 Structural Bioinformatics 1
 

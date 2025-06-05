@@ -5,7 +5,7 @@ My classwork from [BIMM 143 SP25](https://bioboot.github.io/bimm143_S25/) at UC 
 
 - 05 [Advanced graphics with **ggplot2**](https://github.com/PeterSax929/bimm143_github/blob/main/class05/class05.md)
 
-- 06 R functions
+- 06 [R functions](https://github.com/PeterSax929/bimm143_github/blob/main/class06/class06.md)
 
 - 07 Machine Learning and Hierarchical Clustering
 

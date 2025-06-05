@@ -9,7 +9,7 @@ My classwork from [BIMM 143 SP25](https://bioboot.github.io/bimm143_S25/) at UC 
 
 - 07 [Machine Learning and Hierarchical Clustering](https://github.com/PeterSax929/bimm143_github/blob/main/Class07/class07.md)
 
-- 08 Hands on Project with PCA
+- 08 [Hands on Project with PCA](https://github.com/PeterSax929/bimm143_github/blob/main/Class08/class08.md)
 
 - 09 Halloween Candy
 

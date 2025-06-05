@@ -21,7 +21,7 @@ My classwork from [BIMM 143 SP25](https://bioboot.github.io/bimm143_S25/) at UC 
 
 - 13 [Transcriptomics / RNASeq](https://github.com/PeterSax929/bimm143_github/blob/main/Class13/Class13.md)
 
-- 14 DeSeq2 Analysis
+- 14 [DeSeq2 Analysis](https://github.com/PeterSax929/bimm143_github/blob/main/Class14/Class14.pdf)
 
 - 16 UNIX for bioinformatics
 

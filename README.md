@@ -19,7 +19,7 @@ My classwork from [BIMM 143 SP25](https://bioboot.github.io/bimm143_S25/) at UC 
 
 - 12 Genome Informatics
 
-- 13 Transcriptomics / RNASeq
+- 13 [Transcriptomics / RNASeq](https://github.com/PeterSax929/bimm143_github/blob/main/Class13/Class13.md)
 
 - 14 DeSeq2 Analysis
 

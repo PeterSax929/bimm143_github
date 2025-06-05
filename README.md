@@ -23,6 +23,6 @@ My classwork from [BIMM 143 SP25](https://bioboot.github.io/bimm143_S25/) at UC 
 
 - 14 [DeSeq2 Analysis](https://github.com/PeterSax929/bimm143_github/blob/main/Class14/Class14.pdf)
 
-- 16 UNIX for bioinformatics
+- 16 [UNIX for bioinformatics](https://github.com/PeterSax929/bimm143_github/blob/main/Class16/unix_notes.txt)
 
 - 18 [Pertussis Mini Project](https://github.com/PeterSax929/bimm143_github/blob/main/Class18/Class18.md) 

@@ -7,7 +7,7 @@ My classwork from [BIMM 143 SP25](https://bioboot.github.io/bimm143_S25/) at UC 
 
 - 06 [R functions](https://github.com/PeterSax929/bimm143_github/blob/main/class06/class06.md)
 
-- 07 Machine Learning and Hierarchical Clustering
+- 07 [Machine Learning and Hierarchical Clustering](https://github.com/PeterSax929/bimm143_github/blob/main/Class07/class07.md)
 
 - 08 Hands on Project with PCA
 
